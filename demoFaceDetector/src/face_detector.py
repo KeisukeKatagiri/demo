@@ -13,10 +13,10 @@ class FaceDetector:
         temp_confidence = []
         for n in images[0]:
             dt_now = datetime.datetime.now()
-            temp_confidence.append("Execution date and time: {}".format(dt_now))  # Execution date and time 実行日時
+            temp_confidence.append("Execution date and time: {}".format(dt_now))
             self._result.append([])
             self._result.append(temp_confidence)
-            temp_confidence = ["Processing file: {}".format(n)]  # Processing file 処理ファイル名
+            temp_confidence = ["Processing file: {}".format(n)]
             self._result.append(temp_confidence)
             temp_confidence = []
             img = dlib.load_rgb_image(n)

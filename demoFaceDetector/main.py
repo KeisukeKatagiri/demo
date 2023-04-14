@@ -46,8 +46,8 @@ face_detector = FaceDetector()
 root = tk.Tk()
 root.title('Model Validation')
 root.geometry('+%d+%d' % (350, 10))  # place GUI at x=350, y=10
-root.resizable(False, False)  # maximize disabled（最大化ボタンの無効化:追加）
-root.configure(bg="#F4F4F4", bd=20)  # window background color and border width ウィンドウの背景色,枠線サイズ
+root.resizable(False, False)  # maximize disabled
+root.configure(bg="#F4F4F4", bd=20)  # window background color and border width
 frame = tk.Frame(root,
                  width=750,
                  height=400,
