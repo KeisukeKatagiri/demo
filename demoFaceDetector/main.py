@@ -4,6 +4,7 @@ import csv
 import tkinter as tk
 from src.path_handler import PathHandler
 from tkinter.messagebox import showinfo
+import dlib
 
 EXTENSIONS = {'.jpg', '.png'}
 CSV_FILE_TYPE = [("csv files", "*.csv")]
@@ -20,11 +21,42 @@ def run(path_handler: PathHandler, face_rec: FaceDetector):
 
         elif len(sep_path) == 3:
             face_images[1].append(image_path)
-    result = face_rec.one_folder(face_images)
 
-    with open(path_handler.csv_file_name, mode='a', newline='') as f:
-        writer = csv.writer(f, delimiter=',')
-        writer.writerows(result)
+
+    for image in face_images:
+        """
+        OUTPUT:
+        result = {"start_time": DATE,
+                  "filename": NAME,
+                  "number of faces": INT,
+                  "scores(process_img)": DICT,
+                  "detected_faces": DICT(dets)}
+        """
+
+        # result["start_time"] = datetime.datetime.now()
+        # result["filename"] = image
+
+        result_to_write = []
+        result_to_write.append(face_rec.register_time_stamp())
+        result_to_write.append(face_rec.form_process_message(image))
+
+        raw_image = dlib.load_rgb_image(image)
+        dets = face_rec.detector(raw_image, 1)
+        detected_face = face_rec.process_img(raw_image)
+
+        result_to_write.append(detected_face)
+        result_to_write.append("Number of faces detected: {}".format(len(dets)))
+
+        for i, d in enumerate(dets):
+            result_to_write.append(["Detection {}: Left: {} Top: {} Right: {} Bottom: {}".format(
+                i, d.left(), d.top(), d.right(), d.bottom())])
+
+        face_rec.preview_result(dets, image, raw_image)
+
+        # convert result(dict) to csv or dataframe or json or whatever you please.
+        with open(path_handler.csv_file_name, mode='a', newline='') as f:
+            writer = csv.writer(f, delimiter=',')
+            writer.writerow(result_to_write)
 
     showinfo(message='The process completed!')
 
