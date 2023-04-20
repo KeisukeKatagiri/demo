@@ -4,6 +4,7 @@ import csv
 import tkinter as tk
 from src.path_handler import PathHandler
 from tkinter.messagebox import showinfo
+import datetime
 import dlib
 
 EXTENSIONS = {'.jpg', '.png'}
@@ -22,41 +23,50 @@ def run(path_handler: PathHandler, face_rec: FaceDetector):
         elif len(sep_path) == 3:
             face_images[1].append(image_path)
 
+    # OUTPUT
+    field_name = ["filename",
+                  "number of faces",
+                  "detected faces",
+                  "detection position",
+                  "start time",
+                  "end time"]
+    # Write field names(header) to csv.
+    with open(path_handler.csv_file_name, mode='a', encoding='utf-8', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=field_name)
+        writer.writeheader()
 
-    for image in face_images:
-        """
-        OUTPUT:
-        result = {"start_time": DATE,
-                  "filename": NAME,
-                  "number of faces": INT,
-                  "scores(process_img)": DICT,
-                  "detected_faces": DICT(dets)}
-        """
+    for images in face_images:
+        for image in images:
+            result = {}
+            result["start time"] = datetime.datetime.now().isoformat()
+            result["filename"] = image
 
-        # result["start_time"] = datetime.datetime.now()
-        # result["filename"] = image
+            raw_image = dlib.load_rgb_image(image)
+            dets = face_rec.detector(raw_image, 1)
+            detected_face = face_rec.process_img(raw_image)
 
-        result_to_write = []
-        result_to_write.append(face_rec.register_time_stamp())
-        result_to_write.append(face_rec.form_process_message(image))
+            result["number of faces"] = len(dets)
+            result["detected faces"] = detected_face
 
-        raw_image = dlib.load_rgb_image(image)
-        dets = face_rec.detector(raw_image, 1)
-        detected_face = face_rec.process_img(raw_image)
+            # dictionary type
+            detection_position = {}
+            for i, d in enumerate(dets):
+                detection_position.setdefault("Detection", []).append(i)
+                detection_position.setdefault("Left", []).append(d.left())
+                detection_position.setdefault("Top", []).append(d.top())
+                detection_position.setdefault("Right", []).append(d.right())
+                detection_position.setdefault("Bottom", []).append(d.bottom())
 
-        result_to_write.append(detected_face)
-        result_to_write.append("Number of faces detected: {}".format(len(dets)))
+            result["detection position"] = detection_position
+            result["end time"] = datetime.datetime.now().isoformat()
 
-        for i, d in enumerate(dets):
-            result_to_write.append(["Detection {}: Left: {} Top: {} Right: {} Bottom: {}".format(
-                i, d.left(), d.top(), d.right(), d.bottom())])
+            face_rec.preview_result(dets, image, raw_image)
 
-        face_rec.preview_result(dets, image, raw_image)
-
-        # convert result(dict) to csv or dataframe or json or whatever you please.
-        with open(path_handler.csv_file_name, mode='a', newline='') as f:
-            writer = csv.writer(f, delimiter=',')
-            writer.writerow(result_to_write)
+            # convert result(dict) to csv or dataframe or json or whatever you please.
+            # convert result(dict) to csv.
+            with open(path_handler.csv_file_name, mode='a', encoding='utf-8', newline='') as f:
+                writer = csv.DictWriter(f, fieldnames=field_name)
+                writer.writerow(result)
 
     showinfo(message='The process completed!')
 
@@ -165,7 +175,8 @@ start_text = tk.StringVar()
 start_btn = tk.Button(root, textvariable=start_text,
                       relief=tk.RAISED,
                       bd=5,
-                      command=lambda: run(path_handler, face_detector),
+                      command=lambda: run(path_handler,
+                                          face_detector),
                       height=2,
                       width=15,
                       bg="#cccccc",

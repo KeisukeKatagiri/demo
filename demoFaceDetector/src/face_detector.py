@@ -1,5 +1,4 @@
 import dlib
-import datetime
 
 
 class FaceDetector:
@@ -20,8 +19,12 @@ class FaceDetector:
     def process_img(self, img):
         if len(img) > 0:
             dets, scores, idx = self.detector.run(img, 1, -1)
-            detected = []
+
+            # dictionary type
+            detected = {}
             for i, d in enumerate(dets):
-                detected.append("Detection {}, score: {}, face_type:{}".format(
-                    d, scores[i], idx[i]))
+                detected.setdefault("Detection", []).append(str(d))
+                detected.setdefault("score", []).append(scores[i])
+                detected.setdefault("face_type", []).append(idx[i])
+
             return detected
