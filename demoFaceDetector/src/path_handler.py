@@ -28,6 +28,7 @@ class PathHandler:
         self.csv_file_name = None
         self.model_file_name = None
         self.extensions = None
+        self.check_box_status = None
 
     def extract_image_paths(self, is_pairs):
         temp = []
@@ -62,3 +63,5 @@ class PathHandler:
         self.base_dir = Path(filedialog.askdirectory()).resolve()
         return self.base_dir
 
+    def set_checkbutton_callback(self, check_status):
+        self.check_box_status = check_status

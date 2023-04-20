@@ -1,3 +1,4 @@
+import json
 import os
 from src.face_detector import FaceDetector
 import csv
@@ -67,6 +68,12 @@ def run(path_handler: PathHandler, face_rec: FaceDetector):
             with open(path_handler.csv_file_name, mode='a', encoding='utf-8', newline='') as f:
                 writer = csv.DictWriter(f, fieldnames=field_name)
                 writer.writerow(result)
+
+            if path_handler.check_box_status:
+                # convert result(dict) to json.
+                json_name = str(path_handler.csv_file_name).replace('.csv', '.json')
+                with open(json_name, mode='a', encoding='utf-8', newline='') as f:
+                    json.dump(result, f, indent=2)
 
     showinfo(message='The process completed!')
 
@@ -169,6 +176,22 @@ browse_csv_text.set("Browse")
 browse_csv_btn.grid(column=2,
                     row=1,
                     padx=50)
+
+# create JSON file
+chk_bln = tk.BooleanVar()
+create_json = tk.Checkbutton(root,
+                             text="Create JSON file""\n(Create Json with the same file name as CSV)"
+                                  "\nJSonファイルの作成\n(CSVと同じファイル名でJson作成)",
+                             variable=chk_bln,
+                             command=lambda: path_handler.set_checkbutton_callback(
+                                 check_status=chk_bln.get()
+                             ),
+                             bg="White",
+                             justify='left'
+                             )
+create_json.grid(column=1,
+                 row=2,
+                 padx=50)
 
 # run
 start_text = tk.StringVar()
