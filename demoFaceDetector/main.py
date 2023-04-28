@@ -1,72 +1,48 @@
-import os
+import datetime
 from src.face_detector import FaceDetector
-import csv
 import tkinter as tk
 from src.path_handler import PathHandler
 from tkinter.messagebox import showinfo
-import datetime
 import dlib
+from src.file_writer import FileWriter
 
 EXTENSIONS = {'.jpg', '.png'}
 CSV_FILE_TYPE = [("csv files", "*.csv")]
+RESULT_KEYS = ["start time",
+               "filename",
+               "number of faces",
+               "detected faces",
+               "detection position",
+               "end time"
+               ]
 
 
 def run(path_handler: PathHandler, face_rec: FaceDetector):
-    base_dir = path_handler.base_dir
-    face_images = [[], []]
-    for image_path in path_handler.extract_image_paths(is_pairs=False):
-        sep_path = image_path.split(base_dir.stem)[-1].split(os.sep)
-
-        if len(sep_path) == 2:
-            face_images[0].append(image_path)
-
-        elif len(sep_path) == 3:
-            face_images[1].append(image_path)
+    face_images = face_rec.set_image_file_path(path_handler.base_dir,
+                                               path_handler.extract_image_paths(is_pairs=False)
+                                               )
 
     # OUTPUT
-    field_name = ["filename",
-                  "number of faces",
-                  "detected faces",
-                  "detection position",
-                  "start time",
-                  "end time"]
     # Write field names(header) to csv.
-    with open(path_handler.csv_file_name, mode='a', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=field_name)
-        writer.writeheader()
+    FileWriter.writeheader_to_csv(path_handler.csv_file_name)
 
     for images in face_images:
         for image in images:
-            result = {}
-            result["start time"] = datetime.datetime.now().isoformat()
-            result["filename"] = image
+            result = dict.fromkeys(RESULT_KEYS)
+            start_time = datetime.datetime.now().isoformat()
 
             raw_image = dlib.load_rgb_image(image)
             dets = face_rec.detector(raw_image, 1)
             detected_face = face_rec.process_img(raw_image)
+            detection_position = FileWriter.set_detection_position(dets)
 
-            result["number of faces"] = len(dets)
-            result["detected faces"] = detected_face
-
-            # dictionary type
-            detection_position = {}
-            for i, d in enumerate(dets):
-                detection_position.setdefault("Detection", []).append(i)
-                detection_position.setdefault("Left", []).append(d.left())
-                detection_position.setdefault("Top", []).append(d.top())
-                detection_position.setdefault("Right", []).append(d.right())
-                detection_position.setdefault("Bottom", []).append(d.bottom())
-
-            result["detection position"] = detection_position
-            result["end time"] = datetime.datetime.now().isoformat()
-
+            result = FileWriter.dictionary_update(image, len(dets), detected_face, detection_position,
+                                                  result, start_time)
             face_rec.preview_result(dets, image, raw_image)
 
-            # convert result(dict) to csv or dataframe or json or whatever you please.
+            # OUTPUT
             # convert result(dict) to csv.
-            with open(path_handler.csv_file_name, mode='a', encoding='utf-8', newline='') as f:
-                writer = csv.DictWriter(f, fieldnames=field_name)
-                writer.writerow(result)
+            FileWriter.convert_to_csv(path_handler.csv_file_name, result)
 
     showinfo(message='The process completed!')
 
