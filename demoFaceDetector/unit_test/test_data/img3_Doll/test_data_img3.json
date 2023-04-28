@@ -1,0 +1,92 @@
+{
+  "image": "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img3_Doll\\doll.jpg",
+  "len_dets": 1,
+  "detected_face": {
+    "Detection": [
+      "[(510, 160) (696, 345)]",
+      "[(520, 410) (564, 454)]",
+      "[(861, 902) (897, 938)]",
+      "[(1108, 296) (1183, 370)]",
+      "[(799, 492) (842, 535)]",
+      "[(527, 671) (579, 723)]",
+      "[(578, 847) (621, 890)]",
+      "[(347, 487) (391, 530)]",
+      "[(381, 497) (424, 540)]",
+      "[(613, 815) (665, 867)]",
+      "[(437, 498) (473, 534)]",
+      "[(550, 668) (612, 730)]",
+      "[(50, 540) (93, 583)]",
+      "[(236, 236) (390, 391)]",
+      "[(552, 752) (627, 826)]"
+    ],
+    "score": [
+      0.8393409885896559,
+      -0.5838788450137185,
+      -0.6422812784843024,
+      -0.6745790801511888,
+      -0.8576524863400019,
+      -0.857796014324621,
+      -0.8600714812435664,
+      -0.8703688085452126,
+      -0.8853017650114183,
+      -0.9093051851168679,
+      -0.9259440265165453,
+      -0.9475446353115595,
+      -0.9529903540768183,
+      -0.9685890520743903,
+      -0.972828448788122
+    ],
+    "face_type": [
+      0,
+      4,
+      1,
+      0,
+      3,
+      3,
+      3,
+      4,
+      0,
+      4,
+      0,
+      3,
+      3,
+      1,
+      3
+    ]
+  },
+  "detection_position": {
+    "Detection": [
+      0
+    ],
+    "Left": [
+      510
+    ],
+    "Top": [
+      160
+    ],
+    "Right": [
+      696
+    ],
+    "Bottom": [
+      345
+    ]
+  },
+  "result": {
+    "start time": null,
+    "filename": null,
+    "number of faces": null,
+    "detected faces": null,
+    "detection position": null,
+    "end time": null
+  },
+  "start time": "2023-04-28T14:31:58.484938",
+  "extract_image_paths": [
+    "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img3_Doll\\doll.jpg"
+  ],
+  "face_images": [
+    [
+      "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img3_Doll\\doll.jpg"
+    ],
+    []
+  ]
+}

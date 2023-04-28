@@ -1,0 +1,88 @@
+{
+  "image": "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img2_Two_persons\\two_persons.jpg",
+  "len_dets": 2,
+  "detected_face": {
+    "Detection": [
+      "[(627, 213) (701, 287)]",
+      "[(225, 196) (315, 285)]",
+      "[(633, 202) (669, 238)]",
+      "[(153, 418) (189, 454)]",
+      "[(246, 336) (308, 398)]",
+      "[(209, 290) (245, 326)]",
+      "[(232, 185) (275, 228)]",
+      "[(247, 430) (290, 473)]",
+      "[(269, 322) (305, 358)]",
+      "[(87, 156) (149, 218)]",
+      "[(439, 370) (501, 433)]",
+      "[(145, 434) (181, 470)]"
+    ],
+    "score": [
+      1.0790980495942946,
+      0.4384182133211012,
+      -0.4175345743827399,
+      -0.46755050074382387,
+      -0.7130944575004157,
+      -0.836429446972947,
+      -0.850927680768113,
+      -0.8660613502362344,
+      -0.8712750877240274,
+      -0.8928789458738451,
+      -0.9452688060270433,
+      -0.999366220043767
+    ],
+    "face_type": [
+      0,
+      0,
+      1,
+      1,
+      1,
+      4,
+      4,
+      2,
+      2,
+      0,
+      0,
+      0
+    ]
+  },
+  "detection_position": {
+    "Detection": [
+      0,
+      1
+    ],
+    "Left": [
+      627,
+      225
+    ],
+    "Top": [
+      213,
+      196
+    ],
+    "Right": [
+      701,
+      315
+    ],
+    "Bottom": [
+      287,
+      285
+    ]
+  },
+  "result": {
+    "start time": null,
+    "filename": null,
+    "number of faces": null,
+    "detected faces": null,
+    "detection position": null,
+    "end time": null
+  },
+  "start time": "2023-04-28T14:31:58.484938",
+  "extract_image_paths": [
+    "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img2_Two_persons\\two_persons.jpg"
+  ],
+  "face_images": [
+    [
+      "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img2_Two_persons\\two_persons.jpg"
+    ],
+    []
+  ]
+}

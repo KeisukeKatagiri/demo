@@ -1,0 +1,37 @@
+{
+  "image": "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img4_Mma_gym\\mma_gym.jpg",
+  "len_dets": 0,
+  "detected_face": {
+    "Detection": [
+      "[(1245, 318) (1281, 354)]",
+      "[(947, 362) (991, 406)]"
+    ],
+    "score": [
+      -0.7389245639004267,
+      -0.9647749076046503
+    ],
+    "face_type": [
+      3,
+      3
+    ]
+  },
+  "detection_position": {},
+  "result": {
+    "start time": null,
+    "filename": null,
+    "number of faces": null,
+    "detected faces": null,
+    "detection position": null,
+    "end time": null
+  },
+  "start time": "2023-04-28T14:31:58.484938",
+  "extract_image_paths": [
+    "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img4_Mma_gym\\mma_gym.jpg"
+  ],
+  "face_images": [
+    [
+      "C:\\Users\\keisu\\PycharmProjects\\pythonProject\\main\\demoFaceDetector\\unit_test\\test_data\\img4_Mma_gym\\mma_gym.jpg"
+    ],
+    []
+  ]
+}
